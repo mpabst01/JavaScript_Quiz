@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    object-position: center;
+    position: relative;
+}
+
+
+header {
+    font-weight: bolder;
+    color: darkgray;
+    position: relative;
+    padding: 20px;
+    margin-block: 20px;
+    object-position: center;
+}
+
+.wrapper {
+    position: relative;
+    padding: 20px;
+    margin-block: 20px;
+    object-position: center;
+    font-variant-position: super;
+}
