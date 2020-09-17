@@ -14,5 +14,8 @@ When time runs out and/or all questions are answered, the user is presented with
 Your application should also be responsive, ensuring that it adapts to multiple screen sizes.
 
 ## Screenshot
-[Home Page] (/Users/maryleepabst/Desktop/homescreen.png)
+<i>Start page/landing page: </i>
+<img src="/Users/maryleepabst/Desktop/homescreen.png" alt="Home Page">
+<i>High Scores: </i>
+<img src="/Users/maryleepabst/Desktop.hof.png" alt="hall of fame">
 
