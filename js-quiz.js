@@ -19,153 +19,125 @@
 // WHEN the game is over
 // THEN I can save my initials and score
 
-const quizContainer = document.getElementById('quiz');
-const resultsContainer = document.getElementById('results');
-const submitButton = document.getElementById('submit');
+var startBtn = document.getElementById("startBtn");
+var submitBtn = document.querySelector("button.submitBtn");
+var secondsLeft = (questions.length * 15 + 1);
+var timerElement = document.getElementById("timer");
+var submitScoreElement = document.querySelector("#submit-score");
+var userScoreElement = document.getElementById("user-score");
+var userNameInput;
+var questionHead = document.getElementById("questions");
+var answerChoices = document.getElementById("answers");
+var questions = questions.js
+questions.embedSWF("questions.js", "questions");
 
+var questionNumber = -1;
+var answer;
 
+function startTimer() {
+ 
+  document.getElementById("home").classList.add('d-none');
+  document.getElementById("quiz").classList.remove('d-none');
 
+  // timer set and begins 120 second countdown
+  setTimer();
 
-var startQuizBtn = document.getElementById('startQuizBtn')
-startQuizBtn.addEventListener("click", startQuiz);
-
-function startQuiz(){
-    timerInterval = setInterval(function() {
-        timeLeft--;
-        timerEl.textContent = "Time left: " + timeLeft;
-        if (timeLeft === 0) {
-          clearInterval(timerInterval);
-          showScore();
-        }
-    }, 1000);
-    quizMain.style.display = "block";
-
+  // create questions to display
+  makeQuestions();
 }
 
-function buildQuiz(){
-  // variable to store the HTML output
-  const output = [];
+function setTimer() {
 
-  // for each question...
-  myQuestions.forEach(
-    (currentQuestion, questionNumber) => {
+  var countdown = setInterval(function () {
+      secondsLeft--;
+      timerElement.textContent = "Time: " + secondsLeft;
 
-      // variable to store the list of possible answers
-      const answers = [];
-
-      // and for each available answer...
-      for(letter in currentQuestion.answers){
-
-        // ...add an HTML radio button
-        answers.push(
-          `<label>
-            <input type="radio" name="question${questionNumber}" value="${letter}">
-            ${letter} :
-            ${currentQuestion.answers[letter]}
-          </label>`
-        );
+      if (secondsLeft === 0 || questionNumber === questions.length) {
+          clearInterval(countdown);
+          setTimeout(displayScore, 500);
       }
-
-      // add this question and its answers to the output
-      output.push(
-        `<div class="question"> ${currentQuestion.question} </div>
-        <div class="answers"> ${answers.join('')} </div>`
-      );
-    }
-  );
-
-  // finally combine our output list into one string of HTML and put it on the page
-  quizContainer.innerHTML = output.join('');
+  }, 1000);
 }
 
+function makeQuestions() {
+  questionNumber++;
+  answer = (questions[questionNumber].answer);
 
-function showResults(){}
+  questionHead.textContent = questions[questionNumber].title;
+  answerChoices.innerHTML = "";
 
-const myQuestions = [
-    {
-        question: "What is a global object that is used in the construction of arrays; which are high level, list-like objects?",
-        answers: {
-            a: ".forEach",
-            b: "item index array",
-            c: "array",
-            d: "Array.prototype",
-        },
-        correctAnswer: "array"
-    },
-    { 
-        question: "",
-        answers: {
-            a: "",
-            b: "",
-            c: "",
-            d: "",
-        },
-        correctAnswer: ""
-    },
+  var choices = questions[questionNumber].choices;
 
-    {
-        question: "",
-        answers: {
-            a: "",
-            b: "",
-            c: "",
-            d: "",
-        },
-        correctAnswer: ""
-    },
+  for (var q = 0; q < choices.length; q++) {
+      var nextChoice = document.createElement("button");
 
-    {
-        question: "",
-        answers: {
-            a: "",
-            b: "",
-            c: "",
-            d: "",
-        },
-        correctAnswer: ""
-    }
-]
-
-function showResults(){
-
-  // gather answer containers from our quiz
-  const answerContainers = quizContainer.querySelectorAll('.answers');
-
-  // keep track of user's answers
-  let numCorrect = 0;
-
-  // for each question...
-  myQuestions.forEach( (currentQuestion, questionNumber) => {
-
-    // find selected answer
-    const answerContainer = answerContainers[questionNumber];
-    const selector = `input[name=question${questionNumber}]:checked`;
-    const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
-    // if answer is correct
-    if(userAnswer === currentQuestion.correctAnswer){
-      // add to the number of correct answers
-      numCorrect++;
-
-      // color the answers green
-      answerContainers[questionNumber].style.color = 'lightgreen';
-    }
-    // if answer is wrong or blank
-    else{
-      // color the answers red
-      answerContainers[questionNumber].style.color = 'red';
-    }
-  });
-
-  // show number of correct answers out of total
-  resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+      nextChoice.textContent = (choices[q]);
+      var answerBtn = answerChoices.appendChild(nextChoice).setAttribute("class", "p-3 m-1 btn btn-light btn-block");
+  }
 }
 
+// display option to enter name to scoreboard
+function displayScore() {
+  document.getElementById("quiz").classList.add('d-none');
+  document.getElementById("submit-score").classList.remove('d-none');
+  userScoreElement.textContent = "FINAL SCORE: " + secondsLeft + ".";
+}
 
-buildQuiz();
+// Event Listeners for Main Buttons
+startBtn.addEventListener("click", startTimer);
+submitBtn.addEventListener("click", function (event) {
+  event.stopPropagation();
+  addScore();
+  
+  window.location.href = './highscores.html';
+});
 
-// on submit, show results
-submitButton.addEventListener('click', showResults);
+function addScore () {
+  userNameInput = document.getElementById("userName").value;
+  
+  // create a new object with name and score keys
+var newScore = {
+      name: userNameInput,
+      score: secondsLeft
+  };
+  // check if there are scores in local storage first and take value
+  //if not, make a blank array
+  var highScores = JSON.parse(localStorage.getItem("highScores") || "[]");
+  // push object into score array
+  highScores.push(newScore);
+  // turn objects into an array of strings + put it into local storage
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+}
+
+function hideFeedback(){
+  var pElement = document.getElementsByClassName("feedback")[0];
+  pElement.style.display='none'
+}
+
+function showFeedback(){
+  var pElement = document.getElementsByClassName("feedback")[0];
+  pElement.removeAttribute('style');
+}
+
+answerChoices.addEventListener("click", function (event) {
+  var pElement = document.getElementsByClassName("feedback")[0];
+  
+  // evaluation of user's answer choices & feedback
+  if (answer === event.target.textContent) {   
+      pElement.innerHTML = "YES!";
+      setTimeout(hideFeedback,1225);
+      showFeedback();   
+      
+  } else {
+      pElement.innerHTML = "WRONG.";
+      setTimeout(hideFeedback,1225);
+      secondsLeft = secondsLeft - 15;
+      showFeedback();
+  }    
+  makeQuestions();
+});
+
+
 
 
 
