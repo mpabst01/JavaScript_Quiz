@@ -15,7 +15,7 @@ Your application should also be responsive, ensuring that it adapts to multiple 
 
 ## Screenshot
 <i>Start page/landing page: </i>
-<img src="Desktop/homescreen.png" alt="Home Page">
+<img src="https://i.imgur.com/q861cpO.png" alt="Home Page">
 <i>High Scores: </i>
-<img src="Desktop/hof.png" alt="hall of fame">
+<img src="https://i.imgur.com/5Jim7cE.png" alt="hall of fame">
 
