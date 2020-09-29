@@ -18,70 +18,60 @@
 // THEN the game is over
 // WHEN the game is over
 // THEN I can save my initials and score
+var questions = [
+  {
+      title: "What is a global object that is used in the construction of arrays; which are high level, list-like objects?",
+      choices: ["Array", "class", "global variable", "window"],
+      answer: "Array"
+  },
+
+  {
+      title: "Add to the end of an Array.",
+      choices: [".pop", ".push", ".append", ".addChild"],
+      answer: ".push"
+  },
+
+  {
+      title: "Which of the following usually take in an argument/parameter? (choose 2)",
+      choices: ["shift", "pop", "unshift", "push"],
+      answer: ["push", "unshift"]
+  },
+
+  {
+      title: "Find the index of an item in the Array.",
+      choices: [".addBtn", ".indexOf", ".class[var]", ".pop"],
+      answer: ".indexOf"
+  },
+
+  {
+      title: "Which creates a new array from an array-like or iterable object?",
+      choices: [".from", ".slice", ".addBtn", ".append"],
+      answer: ".from"
+  },
+
+  {
+      title: "All Array instances inherit from what?",
+      choices: ["Array.prototype", ".sort", ".classOf", ".indexOf"],
+      answer: "Array.prototype"
+  },
+
+
+];
 
 var startBtn = document.getElementById("startBtn");
 var submitBtn = document.querySelector("button.submitBtn");
-var secondsLeft = (questions.length * 15 + 1);
+var secondsLeft = questions.length * 15 + 1
 var timerElement = document.getElementById("timer");
 var submitScoreElement = document.querySelector("#submit-score");
 var userScoreElement = document.getElementById("#user-score");
 var userNameInput;
 var questionHead = document.getElementById("#questions");
 var answerChoices = document.getElementById("#answers");
-var questions = [
-    {
-        title: "What is a global object that is used in the construction of arrays; which are high level, list-like objects?",
-        choices: ["Array", "class", "global variable", "window"],
-        answer: "Array"
-    },
-  
-    {
-        title: "Add to the end of an Array.",
-        choices: [".pop", ".push", ".append", ".addChild"],
-        answer: ".push"
-    },
-  
-    {
-        title: "Which of the following usually take in an argument/parameter? (choose 2)",
-        choices: ["shift", "pop", "unshift", "push"],
-        answer: ["push", "unshift"]
-    },
-  
-    {
-        title: "Find the index of an item in the Array.",
-        choices: [".addBtn", ".indexOf", ".class[var]", ".pop"],
-        answer: ".indexOf"
-    },
-  
-    {
-        title: "Which creates a new array from an array-like or iterable object?",
-        choices: [".from", ".slice", ".addBtn", ".append"],
-        answer: ".from"
-    },
-  
-    {
-        title: "All Array instances inherit from what?",
-        choices: ["Array.prototype", ".sort", ".classOf", ".indexOf"],
-        answer: "Array.prototype"
-    },
-  
-  
-  ];
 
 var questionNumber = -1;
 var answer;
 
-function startTimer() {
- 
-  document.getElementById("home").classList.add('d-none');
-  document.getElementById("quiz").classList.remove('d-none');
 
-  // timer set and begins 120 second countdown
-  setTimer();
-
-  // create questions to display
-  makeQuestions();
-}
 
 function setTimer() {
 
@@ -121,7 +111,8 @@ function displayScore() {
 }
 
 // Event Listeners for Main Buttons
-startBtn.addEventListener("click", startTimer);
+startBtn.addEventListener("click", startTimer());
+startBtn.getElementById("test")
 submitBtn.addEventListener("click", function (event) {
   event.stopPropagation();
   addScore();
@@ -176,5 +167,15 @@ answerChoices.addEventListener("click", function (event) {
 
 
 
+function startTimer() {
+ 
+  document.getElementById("home").classList.add('d-none');
+  document.getElementById("quiz").classList.remove('d-none');
 
+  // timer set and begins 120 second countdown
+  setTimer();
+
+  // create questions to display
+  makeQuestions();
+}
 
